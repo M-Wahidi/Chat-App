@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+
+    <title>Chat App</title>
+  </head>
+  <body>
+    <h1 class="app-name">Chat APP</h1>
+
+    <div class="main">
+      <!-- Search Area,Incoming Area -->
+      <div class="search-container">
+        <div class="chat-search">
+          <input type="text" placeholder="Search" class="search" />
+          <div class="create-message">
+            <i class="fas fa-pen-square"></i>
+          </div>
+        </div>
+
+        <!-- Chat Area  -->
+        <div class="messages"></div>
+      </div>
+
+      <!-- Chat Area -->
+
+      <div class="chat-container">
+        <header>
+          <i class="fas fa-arrow-left"></i>
+          <div class="chat-name">To: <span class="send-to">Drake</span></div>
+          <i class="fas fa-ellipsis-h"></i>
+        </header>
+        <div class="chat-messages">
+          <div class="date">
+            <div class="date-info">Monday, 1:27 PM</div>
+          </div>
+        </div>
+        <form>
+          <div class="message-input">
+            <i class="fas fa-paperclip"></i>
+            <input type="text" class="sendMessage" name="sendMessage" />
+            <div class="input-iconzero">
+              <i class="far fa-laugh"></i>
+              <i class="fas fa-paper-plane"></i>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="create-user-model">
+        <i class="fas fa-times"></i>
+        <div class="add-form-container">
+          <h2>ADD CONTACT</h2>
+          <div>
+            <label for="name">Name: </label>
+            <input type="text" class="user-name" id="name" />
+          </div>
+
+          <div>
+            <label for="about">About:</label>
+            <input type="text" class="user-about" id="about" />
+          </div>
+          <!-- <div>
+            <label for="profile-pic">Profile Pic:</label>
+            <input type="file" id="profile-pic" />
+          </div> -->
+          <i class="fas fa-plus-square"></i>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="../main.js" defer></script>
+    <script type="module" src="./chatMessages.js" defer></script>
+  </body>
+</html>
