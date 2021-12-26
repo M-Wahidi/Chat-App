@@ -108,39 +108,35 @@ body {
   cursor: pointer;
   position: relative;
 }
+.message:first-child::before {
+  content: "";
+  height: 1px;
+  width: 90%;
+  position: absolute;
+  top: 0;
+  background-color: rgb(228, 228, 228);
+}
+.message:hover::before {
+  background-color: var(--blue-color);
+}
+
 .message::before {
   content: " ";
-  background-color: lightgray;
+  background-color: rgb(228, 228, 228);
   height: 1px;
   width: 90%;
   position: absolute;
   top: 0rem;
-}
-.message:last-child::after {
-  content: " ";
-  background-color: lightgray;
-  height: 1px;
-  width: 90%;
-  position: absolute;
-  bottom: 0rem;
   left: 50%;
   transform: translateX(-50%);
 }
+
 .message:hover,
-.message:hover > .time,
-.message:hover > .message-info .message-data,
-.message:hover:after,
-.message:hover:before {
+.message:hover > .time {
   background-color: var(--blue-color);
   color: var(--light-mode-color);
 }
-.message.active *,
-.message.active,
-.message.active::after,
-.message.active::before {
-  background-color: var(--blue-color);
-  color: var(--light-mode-color) !important;
-}
+
 .message .profile-pic {
   max-height: 40px;
   max-width: 40px;
@@ -163,8 +159,7 @@ body {
 }
 .message .message-info .message-data {
   font-size: 0.8rem;
-  color: rgb(104, 104, 104);
-  width: 180px;
+  width: fit-content;
   overflow: hidden;
 }
 .message .time {
@@ -174,7 +169,6 @@ body {
   justify-content: flex-start;
   align-items: center;
   position: relative;
-  color: darkgrey;
 }
 
 /* Chat Area */
@@ -232,7 +226,7 @@ body {
   background-color: #fff;
   text-align: center;
   padding: 0 1.5rem;
-  width: 180px;
+  width: 220px;
   left: 50%;
   top: -0.7rem;
   transform: translateX(-50%);
@@ -247,12 +241,12 @@ body {
   position: relative;
   right: 1rem;
   width: 270px;
-  word-break: break-all;
+  word-break: keep-all;
   padding-left: 1rem;
 }
 .sender-message {
   color: var(--dark-mode-color);
-  padding: 0.5rem;
+  padding: 1.2rem 0.5rem;
   background-color: var(--grey-color);
   margin: 15px 0;
   border-radius: 7px;
@@ -261,6 +255,13 @@ body {
   word-break: break-all;
   padding-left: 1rem;
   transform: translateX(410px);
+}
+.sender-message > * {
+  position: absolute;
+  bottom: 0.2rem;
+  right: 0.5rem;
+  color: var(--dark-mode-color);
+  font-size: 0.7rem;
 }
 
 .sender-message::after,
@@ -272,9 +273,6 @@ body {
   position: absolute;
   top: 39%;
 }
-/* .chat-messages div:nth-child(2) {
-  margin-top: 5rem;
-} */
 .sender-message::after {
   background-color: var(--grey-color);
   right: -10px;
@@ -406,7 +404,7 @@ form {
   }
   .search-container {
     flex-basis: 100vw;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
   .chat-search {
     justify-content: space-around;
@@ -437,9 +435,9 @@ form {
   .chat-container {
     width: 100vw;
     position: absolute;
-    transform: translateX(900px);
+    transform: translateX(830px);
     overflow-x: hidden;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
   .chat-container header {
     justify-content: end;
@@ -520,61 +518,129 @@ form {
   height: 100vh;
   width: 100vw;
   background-color: rgba(107, 96, 96, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
 }
 
 .create-user-model {
   width: 350px;
-  height: 350px;
+  height: 390px;
   border-radius: 10px;
-  background-color: rgb(241, 230, 230);
+  background-color: var(--blue-color);
+  color: var(--light-mode-color);
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
   display: none;
+  box-shadow: 1px 2px 3px 1px rgb(104, 104, 104, 0.8);
 }
 .fa-times {
   position: relative;
   font-size: 1.5rem;
-  transform: translateX(290px);
   top: 0.5rem;
+  left: 44%;
   cursor: pointer;
   z-index: 2;
-}
-.create-user-model.open-model {
-  display: flex;
-  justify-content: center;
+  transition: all 0.1s ease-in-out;
 }
 
-.add-form-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .add-form-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 0.5rem;
   height: 100%;
-  gap: 1rem 0;
+  width: 100%;
+  position: absolute;
+  gap: 0.7rem 0;
 }
 
-.add-form-container input {
+.name-div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  font-size: 1.2rem;
+}
+.name-div input {
   border: none;
   outline: none;
   height: 25px;
-  width: 220px;
-  padding-left: 0.5rem;
+  width: 239px;
+  padding-left: 0.2rem;
+  margin-top: 0.5rem;
+  position: relative;
 }
+.message-div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  font-size: 1.2rem;
+}
+textarea {
+  resize: none;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+  padding-left: 0.2rem;
+  margin-top: 0.5rem;
+  width: 239px;
+  height: 120px;
+}
+.profile-pic-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 1.2rem;
+}
+.profile-pic-div input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  position: relative;
+  left: 10px;
+  margin-top: 0.5rem;
+}
+
 .fa-plus-square {
   font-size: 2rem;
-  left: 50%;
   cursor: pointer;
+  margin: 0.3rem 0;
+  transition: all 0.1s ease-in-out;
+}
+.fa-plus-square:hover,
+.fa-times:hover {
+  color: rgb(235, 227, 227);
+}
+.create-user-model.open-model {
+  display: flex;
+  justify-content: center;
+}
+.message.active-contact::before,
+.message.active-contact {
+  background-color: var(--blue-color);
+  color: var(--light-mode-color);
+}
+.message:hover .message-info .message-data span {
+  display: inline-block;
+  -webkit-animation: messageAnimation 3s linear infinite;
+  animation: messageAnimation 3s linear infinite;
+}
+
+@keyframes messageAnimation {
+  0% {
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+  }
 }

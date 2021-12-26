@@ -39,11 +39,7 @@
           <div class="chat-name">To: <span class="send-to">Drake</span></div>
           <i class="fas fa-ellipsis-h"></i>
         </header>
-        <div class="chat-messages">
-          <div class="date">
-            <div class="date-info">Monday, 1:27 PM</div>
-          </div>
-        </div>
+        <div class="chat-messages"></div>
         <form>
           <div class="message-input">
             <i class="fas fa-paperclip"></i>
@@ -60,19 +56,19 @@
         <i class="fas fa-times"></i>
         <div class="add-form-container">
           <h2>ADD CONTACT</h2>
-          <div>
+          <div class="name-div">
             <label for="name">Name: </label>
             <input type="text" class="user-name" id="name" />
           </div>
 
-          <div>
-            <label for="about">About:</label>
-            <input type="text" class="user-about" id="about" />
+          <div class="message-div">
+            <label class="message-label" for="message">Message:</label>
+            <textarea type="textarea" class="user-message" id="message"> </textarea>
           </div>
-          <!-- <div>
+          <div class="profile-pic-div">
             <label for="profile-pic">Profile Pic:</label>
             <input type="file" id="profile-pic" />
-          </div> -->
+          </div>
           <i class="fas fa-plus-square"></i>
         </div>
       </div>
@@ -80,5 +76,6 @@
 
     <script type="module" src="../main.js" defer></script>
     <script type="module" src="./chatMessages.js" defer></script>
+    <script type="module" src="./utils.js"></script>
   </body>
 </html>

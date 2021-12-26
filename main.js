@@ -1,13 +1,10 @@
-const createUserModel = document.querySelector(".create-user-model");
-const openContactModel = document.querySelector(".create-message");
-const closeModelBtn = document.querySelector(".fa-times");
+import { formatTime, addDataToLocalStorage, checkInput, clearFields, setCurrentContact, closeModel } from "./utils.js";
+import { sendInitMessage } from "./chatMessages.js";
 const addUserBtn = document.querySelector(".fa-plus-square");
 const contactsContainer = document.querySelector(".messages");
 const messagesArea = document.querySelector(".search-container");
 const chatArea = document.querySelector(".chat-container");
-const backBtn = document.querySelector(".fa-arrow-left");
 const searchInput = document.querySelector(".search");
-const Days = ["Saturday", "Sunday", "Monday", "Tuseday", "Wednsday", "Thursday", "Firdays"];
 const localStorageitems = getDataToLocalStorage() || [];
 
 export function userID(contact) {
@@ -16,7 +13,6 @@ export function userID(contact) {
 export function sendUsersArr() {
   return localStorageitems;
 }
-
 function openContactsChat(contacts) {
   contacts.forEach((contact) => {
     contact.addEventListener("click", () => {
@@ -28,48 +24,24 @@ function openContactsChat(contacts) {
   });
 }
 
-backBtn.addEventListener("click", () => {
-  chatArea.classList.remove("open-chat-area");
-  messagesArea.classList.remove("close-search-container");
-});
-
-// open create contact model
-openContactModel.addEventListener("click", () => {
-  const createContainer = document.createElement("div");
-  createContainer.classList.toggle("create-container");
-  createUserModel.classList.add("open-model");
-  document.body.appendChild(createContainer);
-  closeModel(createContainer);
-});
-
-//  close create contact model
-const closeModel = (elem) => {
-  closeModelBtn.addEventListener("click", () => {
-    elem.remove();
-    createUserModel.classList.remove("open-model");
-  });
-};
-
 function collectUserData() {
   const name = document.querySelector(".user-name").value;
-  const about = document.querySelector(".user-about").value;
-  const date = new Date();
-  const hours = date.getHours() === 0 ? 12 : date.getHours();
-  const min = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  const message = document.querySelector(".user-message").value;
   const id = Math.floor(Math.random() * 1000000);
   const userOb = {
     id: id,
     name: name,
-    about: about,
-    hours: hours,
-    min: min,
+    // pic:pic,
+    message: message,
+    hours: formatTime().hours,
+    min: formatTime().min,
     messages: {
       sendTo: [
         {
           id,
           name,
           message: {
-            messageData: [],
+            messageData: [{ messageTime: `${formatTime().hours}:${formatTime().min}`, messageText: message }],
           },
         },
       ],
@@ -80,22 +52,12 @@ function collectUserData() {
   return userOb;
 }
 
-const checkInput = (name, about) => {
-  if (name.trim().length === 0) return true;
-  if (about.trim().length === 0) return true;
-};
-
-const clearFields = () => {
-  document.querySelector(".user-name").value = "";
-  document.querySelector(".user-about").value = "";
-};
-
 const addContactToArr = () => {
   const name = document.querySelector(".user-name").value;
-  const about = document.querySelector(".user-about").value;
+  const about = document.querySelector(".user-message").value;
   if (checkInput(name, about) === true) return;
   const dataOBj = collectUserData();
-  localStorageitems.push(dataOBj);
+  localStorageitems.unshift(dataOBj);
   addDataToLocalStorage(localStorageitems);
   displayContacts(localStorageitems);
   clearFields();
@@ -103,6 +65,7 @@ const addContactToArr = () => {
 
 addUserBtn.addEventListener("click", () => {
   addContactToArr();
+  sendInitMessage();
 });
 
 export function displayContacts(users) {
@@ -113,22 +76,22 @@ export function displayContacts(users) {
     conatctDiv.setAttribute("data-id", user.id);
     conatctDiv.innerHTML = `
         <div class="profile-pic">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJkavvBVzIvdiccqhSgnOU96qDtz_Bkc4rLA&usqp=CAU" alt="" />
+          <img src="profile-pic.png" alt="" />
         </div>
         <div class="message-info">
           <div class="name">${user.name}</div>
-          <div class="message-data">${user.about}</div>
+          <div class="message-data"><span>${
+            user.message.length > 20 ? user.message.slice(0, 20) + "..." : user.message
+          }<span></div>
         </div>
-        <div class="time">${user.hours}:<span>${user.min} PM</span></div>
+        <div class="time">${user.hours}:<span>${user.min}</span></div>
         `;
     contactsContainer.appendChild(conatctDiv);
   });
   const contacts = [...document.querySelectorAll(".messages .message")];
   openContactsChat(contacts);
-}
-
-function addDataToLocalStorage(data) {
-  localStorage.setItem("users", JSON.stringify(data));
+  if (contacts.length === 0) return;
+  setCurrentContact(contacts[0]);
 }
 
 function getDataToLocalStorage() {
@@ -154,4 +117,5 @@ searchInput.addEventListener("input", () => {
     displayContacts(filteredArr);
   }
 });
+
 displayContacts(localStorageitems);
