@@ -5,7 +5,16 @@ const chatMessages = document.querySelector(".chat-messages");
 const chatName = document.querySelector(".send-to");
 const messages = document.querySelector(".messages");
 const form = document.querySelector("form");
-const Days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Firday"];
+const sendMessageBtn = document.querySelector(".fa-paper-plane");
+const Days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Saturday",
+  "Firday",
+];
 let foundName = "";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -43,9 +52,9 @@ function addMessages(user) {
 form.addEventListener("input", () => {
   addMessages(foundName);
 });
+sendMessageBtn.addEventListener("click", getUserInput);
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+function getUserInput() {
   const userInput = form.sendMessage.value;
   if (userInput.trim().length === 0) return;
   const messageObj = {
@@ -62,11 +71,17 @@ form.addEventListener("submit", (e) => {
     }
     return contact;
   });
+
   addDataToLocalStorage(currentContact);
   displayMessages();
   scrollBottom();
   form.reset();
   setTimeout(respondMessage, 2000);
+}
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  getUserInput();
 });
 
 function displayMessages() {
@@ -104,7 +119,9 @@ async function displayCurrentMessages() {
   chatName.textContent = defaultContact.name;
   contact[0].classList.add("active-contact");
   const currentContactId = userID(contact[0]).dataset.id;
-  foundName = await sendUsersArr().find((user) => user.id === Number(currentContactId));
+  foundName = await sendUsersArr().find(
+    (user) => user.id === Number(currentContactId)
+  );
   displayMessages();
 }
 
