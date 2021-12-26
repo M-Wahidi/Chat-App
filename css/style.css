@@ -340,6 +340,10 @@ form {
   font-size: 1.5rem;
   color: rgb(165, 156, 156);
   cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+.fa-paper-plane:hover {
+  color: gray;
 }
 
 @media screen and (max-width: 1106px) {

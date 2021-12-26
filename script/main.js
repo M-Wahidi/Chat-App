@@ -4,7 +4,6 @@ import {
   checkInput,
   clearFields,
   setCurrentContact,
-  closeModel,
 } from "./utils.js";
 import { sendInitMessage } from "./chatMessages.js";
 const addUserBtn = document.querySelector(".fa-plus-square");
