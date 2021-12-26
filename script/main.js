@@ -1,4 +1,11 @@
-import { formatTime, addDataToLocalStorage, checkInput, clearFields, setCurrentContact, closeModel } from "./utils.js";
+import {
+  formatTime,
+  addDataToLocalStorage,
+  checkInput,
+  clearFields,
+  setCurrentContact,
+  closeModel,
+} from "./utils.js";
 import { sendInitMessage } from "./chatMessages.js";
 const addUserBtn = document.querySelector(".fa-plus-square");
 const contactsContainer = document.querySelector(".messages");
@@ -6,6 +13,13 @@ const messagesArea = document.querySelector(".search-container");
 const chatArea = document.querySelector(".chat-container");
 const searchInput = document.querySelector(".search");
 const localStorageitems = getDataToLocalStorage() || [];
+
+const x = window.matchMedia("(max-width: 836px)");
+document.addEventListener("keydown", (e) => {
+  if (e.code === "Tab" && x.matches) {
+    e.preventDefault();
+  }
+});
 
 export function userID(contact) {
   return contact;
@@ -41,7 +55,12 @@ function collectUserData() {
           id,
           name,
           message: {
-            messageData: [{ messageTime: `${formatTime().hours}:${formatTime().min}`, messageText: message }],
+            messageData: [
+              {
+                messageTime: `${formatTime().hours}:${formatTime().min}`,
+                messageText: message,
+              },
+            ],
           },
         },
       ],
@@ -81,7 +100,9 @@ export function displayContacts(users) {
         <div class="message-info">
           <div class="name">${user.name}</div>
           <div class="message-data"><span>${
-            user.message.length > 20 ? user.message.slice(0, 20) + "..." : user.message
+            user.message.length > 20
+              ? user.message.slice(0, 20) + "..."
+              : user.message
           }<span></div>
         </div>
         <div class="time">${user.hours}:<span>${user.min}</span></div>
