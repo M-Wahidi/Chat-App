@@ -103,16 +103,18 @@ function displayMessages() {
       day: Days[new Date().getDay()],
     };
   };
+  const dateInfoDiv = document.createElement("div");
+  dateInfoDiv.classList.add("date-info");
 
   setInterval(() => {
-    dateDiv.innerHTML = `
-    <div class="date-info">${getLiveTime().day}, ${getLiveTime().hours}:${
+    dateInfoDiv.innerHTML = `${getLiveTime().day}, ${getLiveTime().hours}:${
       getLiveTime().min
-    }</div>`;
+    }`;
   }, 10);
 
   const dateDiv = document.createElement("div");
   dateDiv.classList.add("date");
+  dateDiv.appendChild(dateInfoDiv);
 
   chatMessages.appendChild(dateDiv);
   messagesArr.map((elem) => {
