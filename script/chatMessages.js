@@ -109,7 +109,7 @@ function displayMessages() {
     <div class="date-info">${getLiveTime().day}, ${getLiveTime().hours}:${
       getLiveTime().min
     }</div>`;
-  }, 100);
+  }, 10);
 
   const dateDiv = document.createElement("div");
   dateDiv.classList.add("date");
