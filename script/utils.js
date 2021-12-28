@@ -8,8 +8,14 @@ const backBtn = document.querySelector(".fa-arrow-left");
 export function formatTime() {
   let date = new Date();
   let timeDay = date.getHours() > 12 ? " PM" : " AM";
-  let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
-  let min = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  let hours =
+    date.getHours() === 0
+      ? 12
+      : date.getHours() > 12
+      ? date.getHours() - 12
+      : date.getHours();
+  let min =
+    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
   return {
     hours: hours,
     min: min + timeDay,
@@ -56,3 +62,18 @@ backBtn.addEventListener("click", () => {
   chatArea.classList.remove("open-chat-area");
   messagesArea.classList.remove("close-search-container");
 });
+
+export function checkInputLanguage(elem) {
+  const arabic = /[\u0600-\u06FF\u0750-\u077F]/;
+  const value = document.querySelector(".sendMessage");
+  if (arabic.test(value.value)) {
+    value.classList.add("arabic");
+  } else {
+    value.classList.remove("arabic");
+  }
+  elem.forEach((msg) => {
+    if (arabic.test(msg.textContent)) {
+      msg.classList.add("arabic");
+    }
+  });
+}

@@ -256,6 +256,12 @@ body {
   padding-left: 1rem;
   transform: translateX(410px);
 }
+.sender-message.arabic {
+  direction: rtl; /* Right to Left */
+}
+.sender-message div {
+  direction: ltr; /* Right to Left */
+}
 .sender-message > * {
   position: absolute;
   bottom: 0.2rem;
@@ -320,6 +326,9 @@ form {
   font-size: 1.2rem;
   word-break: break-all;
   font-weight: 400;
+}
+.message-input input.arabic {
+  direction: rtl; /* Right to Left */
 }
 .message-input .fa-paperclip {
   position: absolute;

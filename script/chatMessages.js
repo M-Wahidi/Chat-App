@@ -1,5 +1,9 @@
 import { userID, sendUsersArr } from "./main.js";
-import { formatTime, addDataToLocalStorage } from "./utils.js";
+import {
+  formatTime,
+  addDataToLocalStorage,
+  checkInputLanguage,
+} from "./utils.js";
 
 const chatMessages = document.querySelector(".chat-messages");
 const chatName = document.querySelector(".send-to");
@@ -44,7 +48,6 @@ async function showContact(e) {
 }
 
 let UserMessages = "";
-
 function addMessages(user) {
   UserMessages = user.messages.sendTo[0].message.messageData;
 }
@@ -52,7 +55,6 @@ function addMessages(user) {
 form.addEventListener("input", () => {
   addMessages(foundName);
 });
-sendMessageBtn.addEventListener("click", getUserInput);
 
 function getUserInput() {
   const userInput = form.sendMessage.value;
@@ -79,22 +81,39 @@ function getUserInput() {
   setTimeout(respondMessage, 2000);
 }
 
+sendMessageBtn.addEventListener("click", getUserInput);
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   getUserInput();
 });
 
+form.addEventListener("keyup", (e) => {
+  document.querySelector(".sendMessage").value;
+  checkInputLanguage([form.sendMessage]);
+});
+
 function displayMessages() {
   const messagesArr = foundName.messages.sendTo[0].message.messageData;
   chatMessages.innerHTML = "";
-  const hours = formatTime().hours;
-  const min = formatTime().min;
-  const day = Days[new Date().getDay()];
+  const getLiveTime = () => {
+    return {
+      hours: formatTime().hours,
+      min: formatTime().min,
+      day: Days[new Date().getDay()],
+    };
+  };
+
+  setInterval(() => {
+    dateDiv.innerHTML = `
+    <div class="date-info">${getLiveTime().day}, ${getLiveTime().hours}:${
+      getLiveTime().min
+    }</div>`;
+  }, 100);
+
   const dateDiv = document.createElement("div");
   dateDiv.classList.add("date");
-  dateDiv.innerHTML = `
-  <div class="date-info">${day}, ${hours}:${min}</div>
-  `;
+
   chatMessages.appendChild(dateDiv);
   messagesArr.map((elem) => {
     const messageDiv = document.createElement("div");
@@ -103,9 +122,10 @@ function displayMessages() {
     messageDiv.textContent = elem.messageText;
     messageDate.textContent = elem.messageTime;
     messageDiv.appendChild(messageDate);
-
     chatMessages.appendChild(messageDiv);
   });
+  checkInputLanguage([...document.querySelectorAll(".sender-message")]);
+
   scrollBottom();
 }
 
