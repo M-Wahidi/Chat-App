@@ -1,28 +1,18 @@
-import { userID, sendUsersArr } from "./main.js";
-import {
-  formatTime,
-  addDataToLocalStorage,
-  checkInputLanguage,
-} from "./utils.js";
+import { userID, sendUsersArr, setLastMessageInMessageArea, displayContacts, localStorageitems } from "./main.js";
+import { formatTime, addDataToLocalStorage, checkInputLanguage, setCurrentContact } from "./utils.js";
 
 const chatMessages = document.querySelector(".chat-messages");
 const chatName = document.querySelector(".send-to");
 const messages = document.querySelector(".messages");
 const form = document.querySelector("form");
 const sendMessageBtn = document.querySelector(".fa-paper-plane");
-const Days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Saturday",
-  "Firday",
-];
+const Days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Firday"];
 let foundName = "";
+let currentContact = "";
 
 document.addEventListener("DOMContentLoaded", () => {
   displayCurrentMessages();
+  currentContact = document.querySelector(".active-contact");
 });
 
 messages.addEventListener("click", async (e) => {
@@ -32,22 +22,30 @@ messages.addEventListener("click", async (e) => {
     contact.classList.remove("active-contact");
   });
   e.target.closest(".message").classList.add("active-contact");
+  currentContact = document.querySelector(".active-contact");
   showContact(e);
 });
 
-async function showContact(e) {
+function getActiveContact() {
+  const contacts = [...document.querySelectorAll(".message")];
+  const setActiveContact = contacts.filter((elem) => elem.dataset.id === currentContact.dataset.id);
+  setCurrentContact(setActiveContact[0]);
+}
+
+function showContact(e) {
   const userData = sendUsersArr();
   const id = userID(e.target.closest(".message")).dataset.id;
   if (e.target.closest(".message")) {
     chatMessages.innerHTML = "";
-    foundName = await userData.find((user) => user.id === Number(id));
-    chatName.textContent = await foundName.name;
+    foundName = userData.find((user) => user.id === Number(id));
+    chatName.textContent = foundName.name;
     addMessages(foundName);
     displayMessages();
   }
 }
 
 let UserMessages = "";
+
 function addMessages(user) {
   UserMessages = user.messages.sendTo[0].message.messageData;
 }
@@ -86,10 +84,12 @@ sendMessageBtn.addEventListener("click", getUserInput);
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   getUserInput();
+  setLastMessageInMessageArea();
+  displayContacts(localStorageitems);
+  getActiveContact();
 });
 
-form.addEventListener("keyup", (e) => {
-  document.querySelector(".sendMessage").value;
+form.addEventListener("input", (e) => {
   checkInputLanguage([form.sendMessage]);
 });
 
@@ -107,9 +107,7 @@ function displayMessages() {
   dateInfoDiv.classList.add("date-info");
 
   setInterval(() => {
-    dateInfoDiv.innerHTML = `${getLiveTime().day}, ${getLiveTime().hours}:${
-      getLiveTime().min
-    }`;
+    dateInfoDiv.innerHTML = `${getLiveTime().day}, ${getLiveTime().hours}:${getLiveTime().min}`;
   }, 10);
 
   const dateDiv = document.createElement("div");
@@ -127,7 +125,6 @@ function displayMessages() {
     chatMessages.appendChild(messageDiv);
   });
   checkInputLanguage([...document.querySelectorAll(".sender-message")]);
-
   scrollBottom();
 }
 
@@ -141,9 +138,7 @@ async function displayCurrentMessages() {
   chatName.textContent = defaultContact.name;
   contact[0].classList.add("active-contact");
   const currentContactId = userID(contact[0]).dataset.id;
-  foundName = await sendUsersArr().find(
-    (user) => user.id === Number(currentContactId)
-  );
+  foundName = await sendUsersArr().find((user) => user.id === Number(currentContactId));
   displayMessages();
 }
 

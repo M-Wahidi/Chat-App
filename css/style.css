@@ -63,9 +63,9 @@ body {
 }
 .create-message {
   background-color: var(--blue-color);
-  border-radius: 100%;
-  height: 40px;
+  border-radius: 50%;
   width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,7 +74,7 @@ body {
 }
 
 .create-message .fa-pen-square {
-  font-size: 1.2rem;
+  font-size: 16px;
   color: var(--light-mode-color);
   text-align: center;
 }
@@ -108,6 +108,7 @@ body {
   cursor: pointer;
   position: relative;
 }
+
 .message:first-child::before {
   content: "";
   height: 1px;
@@ -129,6 +130,11 @@ body {
   top: 0rem;
   left: 50%;
   transform: translateX(-50%);
+}
+.message.active-contact::before,
+.message.active-contact {
+  background-color: var(--blue-color) !important;
+  color: var(--light-mode-color) !important;
 }
 
 .message:hover,
@@ -354,6 +360,98 @@ form {
 .fa-paper-plane:hover {
   color: gray;
 }
+.create-user-model {
+  height: 100%;
+  background-color: rgb(246, 246, 246);
+  color: #333;
+  position: absolute;
+  transform: translateX(-360px);
+  bottom: 0;
+  width: 360px;
+  z-index: 3;
+  transition: all 0.3s ease-in-out;
+}
+.create-user-model.open-model {
+  transform: translateX(0);
+}
+.add-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 90%;
+  gap: 2rem 0;
+}
+.add-form-container > * {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 0.5rem;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.name-div input,
+.profile-pic-div input {
+  outline: none;
+}
+.fa-times {
+  right: 1rem;
+  top: 1rem;
+  font-size: 1.5rem;
+  position: absolute;
+  z-index: 4;
+  cursor: pointer;
+}
+.add-form-container textarea {
+  width: 90%;
+  height: 200px;
+  resize: none;
+  outline: none;
+  padding-left: 0.2rem;
+}
+.add-form-container .name-div input {
+  width: 90%;
+  height: 35px;
+  padding-left: 0.2rem;
+}
+.profile-pic-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  font-size: 1.2rem;
+  gap: 0 1rem;
+}
+.profile-pic-div input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 63%;
+  position: relative;
+}
+.add-form-container .fa-plus-square {
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 2rem;
+  width: auto;
+  height: auto;
+  margin: 0;
+  cursor: pointer;
+}
+.name-div,
+.message-div,
+.profile-pic-div {
+  gap: 0.5rem 0;
+}
+.fa-plus-square:hover,
+.fa-times:hover {
+  color: rgb(235, 227, 227);
+}
 
 @media screen and (max-width: 1106px) {
   .main {
@@ -406,11 +504,21 @@ form {
   .message-input input {
     width: 70%;
   }
+  .create-user-model {
+    transform: translateX(-300px);
+    width: 300px;
+  }
 }
 @media screen and (max-width: 836px) {
+  .app-name {
+    top: 0.5rem;
+  }
   .main {
     flex-wrap: unset;
     overflow-x: hidden;
+    top: 3rem;
+    height: calc(100vh - 3rem);
+    margin: 0;
   }
   header {
     position: sticky;
@@ -428,6 +536,7 @@ form {
     width: 80%;
     margin: 0 1rem;
   }
+
   .message {
     justify-content: unset;
     position: relative;
@@ -459,7 +568,7 @@ form {
   .chat-container header {
     justify-content: end;
     margin-right: 2rem;
-    position: relative;
+    position: sticky;
   }
   .chat-container header div {
     position: absolute;
@@ -484,6 +593,7 @@ form {
   .chat-messages {
     position: relative;
     width: 100%;
+    height: 80%;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
@@ -492,7 +602,16 @@ form {
     transform: unset;
     position: relative;
     align-self: flex-end;
-    left: 10px;
+    display: flex;
+    align-items: center;
+    left: 23px;
+    width: 200px;
+    max-height: auto;
+    word-break: break-all;
+    font-size: 0.8rem;
+  }
+  .reciver-message {
+    width: 200px;
   }
 
   .open-chat-area {
@@ -508,10 +627,12 @@ form {
 
   form {
     display: flex;
-    height: 100px;
+    height: 70px;
     justify-content: center;
     align-items: center;
-    position: sticky;
+    position: absolute;
+    bottom: 0rem;
+    background-color: rgb(214, 211, 211);
   }
   .message-input {
     position: relative;
@@ -534,135 +655,131 @@ form {
     height: 100%;
     margin-left: 4rem;
   }
-}
 
-.create-container {
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(107, 96, 96, 0.4);
-  position: absolute;
-}
-
-.create-user-model {
-  width: 350px;
-  height: 390px;
-  border-radius: 10px;
-  background-color: var(--blue-color);
-  color: var(--light-mode-color);
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  display: none;
-  box-shadow: 1px 2px 3px 1px rgb(104, 104, 104, 0.8);
-}
-.fa-times {
-  position: relative;
-  font-size: 1.5rem;
-  top: 0.5rem;
-  left: 44%;
-  cursor: pointer;
-  z-index: 2;
-  transition: all 0.1s ease-in-out;
-}
-
-.add-form-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: 0.5rem;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  gap: 0.7rem 0;
-}
-
-.name-div {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  font-size: 1.2rem;
-}
-.name-div input {
-  border: none;
-  outline: none;
-  height: 25px;
-  width: 239px;
-  padding-left: 0.2rem;
-  margin-top: 0.5rem;
-  position: relative;
-}
-.message-div {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  font-size: 1.2rem;
-}
-textarea {
-  resize: none;
-  border: none;
-  font-size: 1rem;
-  outline: none;
-  padding-left: 0.2rem;
-  margin-top: 0.5rem;
-  width: 239px;
-  height: 120px;
-}
-.profile-pic-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  font-size: 1.2rem;
-}
-.profile-pic-div input {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  position: relative;
-  left: 10px;
-  margin-top: 0.5rem;
-}
-
-.fa-plus-square {
-  font-size: 2rem;
-  cursor: pointer;
-  margin: 0.3rem 0;
-  transition: all 0.1s ease-in-out;
-}
-.fa-plus-square:hover,
-.fa-times:hover {
-  color: rgb(235, 227, 227);
-}
-.create-user-model.open-model {
-  display: flex;
-  justify-content: center;
-}
-.message.active-contact::before,
-.message.active-contact {
-  background-color: var(--blue-color);
-  color: var(--light-mode-color);
-}
-.message:hover .message-info .message-data span {
-  display: inline-block;
-  -webkit-animation: messageAnimation 3s linear infinite;
-  animation: messageAnimation 3s linear infinite;
-}
-
-@keyframes messageAnimation {
-  0% {
+  .create-user-model {
+    height: 100%;
+    background-color: rgb(246, 246, 246);
+    color: #333;
+    position: absolute;
     transform: translateX(-100%);
-    -webkit-transform: translateX(-100%);
+    bottom: 0;
+    width: 100%;
+    z-index: 99;
+    transition: all 0.3s ease-in-out;
   }
-  100% {
-    transform: translateX(100%);
-    -webkit-transform: translateX(100%);
+  .create-user-model.open-model {
+    transform: translateX(0);
+  }
+  .fa-times {
+    position: absolute;
+    font-size: 1.5rem;
+    top: 0.5rem;
+    right: 1rem;
+    cursor: pointer;
+    z-index: 2;
+    transition: all 0.1s ease-in-out;
+  }
+
+  .add-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0.5rem;
+    width: 100%;
+    height: 80%;
+    position: relative;
+    gap: 0;
+    top: 2.5rem;
+  }
+
+  .name-div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    font-size: 1.2rem;
+  }
+  .name-div input {
+    border: none;
+    outline: none;
+    height: 35px;
+    width: 300px;
+    padding-left: 0.2rem;
+    margin-top: 0.5rem;
+    position: relative;
+    border: 1px solid rgb(214, 212, 212);
+  }
+  .message-div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    font-size: 1.2rem;
+  }
+  textarea {
+    resize: none;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+    padding-left: 0.2rem;
+    margin-top: 0.5rem;
+    max-height: auto;
+    border: 1px solid rgb(214, 212, 212);
+  }
+  @media screen and (max-width: 320px) {
+    textarea {
+      max-height: 70px;
+    }
+    .fa-plus-square {
+      position: relative !important;
+      margin-bottom: 4rem !important;
+    }
+  }
+
+  .profile-pic-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    font-size: 1.2rem;
+    gap: 1rem;
+  }
+  .profile-pic-div input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 63%;
+    position: relative;
+  }
+
+  .fa-plus-square {
+    font-size: 2.5rem;
+    cursor: pointer;
+    position: absolute;
+    transition: all 0.1s ease-in-out;
+    top: 3rem !important;
+    color: var(--dark-mode-color);
+    width: auto;
+    height: auto;
+  }
+
+  .message:hover .message-info .message-data span {
+    display: inline-block;
+    -webkit-animation: messageAnimation 3s linear infinite;
+    animation: messageAnimation 3s linear infinite;
+  }
+
+  @keyframes messageAnimation {
+    0% {
+      transform: translateX(-100%);
+      -webkit-transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+      -webkit-transform: translateX(100%);
+    }
   }
 }

@@ -8,14 +8,8 @@ const backBtn = document.querySelector(".fa-arrow-left");
 export function formatTime() {
   let date = new Date();
   let timeDay = date.getHours() > 12 ? " PM" : " AM";
-  let hours =
-    date.getHours() === 0
-      ? 12
-      : date.getHours() > 12
-      ? date.getHours() - 12
-      : date.getHours();
-  let min =
-    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  let hours = date.getHours() === 0 ? 12 : date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+  let min = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
   return {
     hours: hours,
     min: min + timeDay,
@@ -41,21 +35,15 @@ export function setCurrentContact(contact) {
 }
 
 //  close create contact model
-export const closeModel = (elem) => {
-  closeModelBtn.addEventListener("click", () => {
-    clearFields();
-    elem.remove();
-    createUserModel.classList.remove("open-model");
-  });
-};
+closeModelBtn.addEventListener("click", () => {
+  clearFields();
+  console.log("gg");
+  createUserModel.classList.remove("open-model");
+});
 
 // open create contact model
 openContactModel.addEventListener("click", () => {
-  const createContainer = document.createElement("div");
-  createContainer.classList.toggle("create-container");
   createUserModel.classList.add("open-model");
-  document.body.appendChild(createContainer);
-  closeModel(createContainer);
 });
 
 backBtn.addEventListener("click", () => {

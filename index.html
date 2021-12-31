@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
     <link rel="stylesheet" href="css/style.css" />
 
     <link
@@ -16,7 +17,7 @@
     <title>Chat App</title>
   </head>
   <body>
-    <h1 class="app-name">Chat APP</h1>
+    <h2 class="app-name">Chat APP</h2>
 
     <div class="main">
       <!-- Search Area,Incoming Area -->
@@ -37,19 +38,14 @@
       <div class="chat-container">
         <header>
           <i class="fas fa-arrow-left"></i>
-          <div class="chat-name">To: <span class="send-to">Drake</span></div>
+          <div class="chat-name"><span class="send-to">Drake</span></div>
           <i class="fas fa-ellipsis-h"></i>
         </header>
         <div class="chat-messages"></div>
         <form>
           <div class="message-input">
             <i class="fas fa-paperclip"></i>
-            <input
-              type="text"
-              class="sendMessage"
-              name="sendMessage"
-              placeholder="Hello World..."
-            />
+            <input type="text" class="sendMessage" name="sendMessage" placeholder="Hello World..." />
             <div class="input-iconzero">
               <i class="far fa-laugh"></i>
               <i class="fas fa-paper-plane"></i>
@@ -69,8 +65,7 @@
 
           <div class="message-div">
             <label class="message-label" for="message">Message:</label>
-            <textarea type="textarea" class="user-message" id="message">
-            </textarea>
+            <textarea type="textarea" class="user-message" id="message"> </textarea>
           </div>
           <div class="profile-pic-div">
             <label for="profile-pic">Profile Pic:</label>

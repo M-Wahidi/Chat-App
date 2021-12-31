@@ -1,17 +1,11 @@
-import {
-  formatTime,
-  addDataToLocalStorage,
-  checkInput,
-  clearFields,
-  setCurrentContact,
-} from "./utils.js";
+import { formatTime, addDataToLocalStorage, checkInput, clearFields, setCurrentContact } from "./utils.js";
 import { sendInitMessage } from "./chatMessages.js";
 const addUserBtn = document.querySelector(".fa-plus-square");
 const contactsContainer = document.querySelector(".messages");
 const messagesArea = document.querySelector(".search-container");
 const chatArea = document.querySelector(".chat-container");
 const searchInput = document.querySelector(".search");
-const localStorageitems = getDataToLocalStorage() || [];
+export const localStorageitems = getDataToLocalStorage() || [];
 
 const x = window.matchMedia("(max-width: 836px)");
 document.addEventListener("keydown", (e) => {
@@ -66,7 +60,6 @@ function collectUserData() {
     },
   };
   document.querySelector(".create-user-model").classList.toggle("open-model");
-  document.querySelector(".create-container").remove();
   return userOb;
 }
 
@@ -99,9 +92,7 @@ export function displayContacts(users) {
         <div class="message-info">
           <div class="name">${user.name}</div>
           <div class="message-data"><span>${
-            user.message.length > 20
-              ? user.message.slice(0, 20) + "..."
-              : user.message
+            user.message.length > 20 ? user.message.slice(0, 20) + "..." : user.message
           }<span></div>
         </div>
         <div class="time">${user.hours}:<span>${user.min}</span></div>
@@ -111,7 +102,6 @@ export function displayContacts(users) {
   const contacts = [...document.querySelectorAll(".messages .message")];
   openContactsChat(contacts);
   if (contacts.length === 0) return;
-  setCurrentContact(contacts[0]);
 }
 
 function getDataToLocalStorage() {
@@ -138,4 +128,23 @@ searchInput.addEventListener("input", () => {
   }
 });
 
+export function setLastMessageInMessageArea() {
+  localStorageitems.map((contact) => {
+    const messagesLength = contact.messages.sendTo[0].message.messageData.length;
+    const lastMessage = contact.messages.sendTo[0].message.messageData[messagesLength - 1];
+    const lastMessageText = lastMessage.messageText;
+    const lastMessageTime = lastMessage.messageTime;
+    const lastMessageTimeHour = lastMessageTime.toString().split(":")[0];
+    const lastMessageTimeMin = lastMessageTime.toString().split(":")[1];
+
+    console.log(contact);
+
+    contact.message = lastMessageText;
+    contact.hours = lastMessageTimeHour;
+    contact.min = lastMessageTimeMin;
+  });
+  addDataToLocalStorage(localStorageitems);
+}
+
+setLastMessageInMessageArea();
 displayContacts(localStorageitems);
