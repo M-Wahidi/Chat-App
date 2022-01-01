@@ -462,12 +462,14 @@ form {
   right: 2.4rem;
   bottom: 4.2rem;
   display: none;
+  padding: 0 0.5rem;
 }
 .emoji-model.open {
   display: grid;
 }
 .emoji-model > * {
   cursor: pointer;
+  font-size: 1.4rem;
 }
 
 @media screen and (max-width: 1106px) {
@@ -628,7 +630,7 @@ form {
     width: 200px;
     max-height: auto;
     word-break: break-all;
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
   .reciver-message {
     width: 200px;
