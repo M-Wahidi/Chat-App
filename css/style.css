@@ -452,6 +452,23 @@ form {
 .fa-times:hover {
   color: rgb(235, 227, 227);
 }
+.emoji-model {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(7, 1fr);
+  width: auto;
+  background-color: whitesmoke;
+  position: absolute;
+  right: 2.4rem;
+  bottom: 4.2rem;
+  display: none;
+}
+.emoji-model.open {
+  display: grid;
+}
+.emoji-model > * {
+  cursor: pointer;
+}
 
 @media screen and (max-width: 1106px) {
   .main {
@@ -507,6 +524,9 @@ form {
   .create-user-model {
     transform: translateX(-300px);
     width: 300px;
+  }
+  .emoji-model {
+    right: 1.8rem;
   }
 }
 @media screen and (max-width: 836px) {
@@ -728,6 +748,10 @@ form {
     margin-top: 0.5rem;
     max-height: auto;
     border: 1px solid rgb(214, 212, 212);
+  }
+  .emoji-model {
+    right: 2.5rem;
+    bottom: 4.5rem;
   }
   @media screen and (max-width: 320px) {
     textarea {

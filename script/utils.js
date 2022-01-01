@@ -4,10 +4,12 @@ const openContactModel = document.querySelector(".create-message");
 const chatArea = document.querySelector(".chat-container");
 const messagesArea = document.querySelector(".search-container");
 const backBtn = document.querySelector(".fa-arrow-left");
+const emojiBtn = document.querySelector(".fa-laugh");
+let emojiValue = "";
 
 export function formatTime() {
   let date = new Date();
-  let timeDay = date.getHours() > 12 ? " PM" : " AM";
+  let timeDay = date.getHours() >= 12 ? " PM" : " AM";
   let hours = date.getHours() === 0 ? 12 : date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
   let min = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
   return {
@@ -37,7 +39,6 @@ export function setCurrentContact(contact) {
 //  close create contact model
 closeModelBtn.addEventListener("click", () => {
   clearFields();
-  console.log("gg");
   createUserModel.classList.remove("open-model");
 });
 
@@ -65,3 +66,28 @@ export function checkInputLanguage(elem) {
     }
   });
 }
+
+emojiBtn.addEventListener("click", () => {
+  document.querySelector(".emoji-model").classList.toggle("open");
+  const emojiText = document.querySelectorAll(".emoji-model span");
+  emojiText.forEach((emoji) => {
+    emoji.addEventListener("click", (e) => {
+      emojiValue = e.currentTarget.textContent;
+      setEmojiText();
+      emojiValue = "";
+    });
+  });
+});
+
+export function setEmojiText() {
+  document.querySelector("form").sendMessage.value = emojiValue;
+}
+
+export function closeEmojiModel() {
+  document.querySelector(".emoji-model").classList.remove("open");
+}
+
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".message")) return;
+  emojiValue = "";
+});

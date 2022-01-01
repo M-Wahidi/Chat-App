@@ -1,5 +1,5 @@
 import { userID, sendUsersArr, setLastMessageInMessageArea, displayContacts, localStorageitems } from "./main.js";
-import { formatTime, addDataToLocalStorage, checkInputLanguage, setCurrentContact } from "./utils.js";
+import { formatTime, addDataToLocalStorage, checkInputLanguage, setCurrentContact, closeEmojiModel } from "./utils.js";
 
 const chatMessages = document.querySelector(".chat-messages");
 const chatName = document.querySelector(".send-to");
@@ -8,11 +8,10 @@ const form = document.querySelector("form");
 const sendMessageBtn = document.querySelector(".fa-paper-plane");
 const Days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Firday"];
 let foundName = "";
-let currentContact = "";
+let currentActiveContact = "";
 
 document.addEventListener("DOMContentLoaded", () => {
   displayCurrentMessages();
-  currentContact = document.querySelector(".active-contact");
 });
 
 messages.addEventListener("click", async (e) => {
@@ -22,13 +21,15 @@ messages.addEventListener("click", async (e) => {
     contact.classList.remove("active-contact");
   });
   e.target.closest(".message").classList.add("active-contact");
-  currentContact = document.querySelector(".active-contact");
+  currentActiveContact = document.querySelector(".active-contact");
+  setCurrentContact(currentActiveContact);
   showContact(e);
+  closeEmojiModel();
 });
 
-function getActiveContact() {
+export function getActiveContact() {
   const contacts = [...document.querySelectorAll(".message")];
-  const setActiveContact = contacts.filter((elem) => elem.dataset.id === currentContact.dataset.id);
+  const setActiveContact = contacts.filter((elem) => elem.dataset.id === currentActiveContact.dataset.id);
   setCurrentContact(setActiveContact[0]);
 }
 
@@ -52,6 +53,7 @@ function addMessages(user) {
 
 form.addEventListener("input", () => {
   addMessages(foundName);
+  currentActiveContact = document.querySelector(".active-contact");
 });
 
 function getUserInput() {
@@ -79,7 +81,13 @@ function getUserInput() {
   setTimeout(respondMessage, 2000);
 }
 
-sendMessageBtn.addEventListener("click", getUserInput);
+sendMessageBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  getUserInput();
+  setLastMessageInMessageArea();
+  displayContacts(localStorageitems);
+  getActiveContact();
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -91,6 +99,17 @@ form.addEventListener("submit", (e) => {
 
 form.addEventListener("input", (e) => {
   checkInputLanguage([form.sendMessage]);
+  getActiveContact();
+});
+document.querySelector(".fa-laugh").addEventListener("click", () => {
+  addMessages(foundName);
+  const contacts = [...document.querySelectorAll(".message")];
+  const activeContact = document.querySelector(".active-contact");
+  currentActiveContact = activeContact;
+  contacts.forEach((contact) => {
+    contact.classList.remove("active-contact");
+  });
+  setCurrentContact(activeContact);
 });
 
 function displayMessages() {

@@ -1,4 +1,5 @@
-import { formatTime, addDataToLocalStorage, checkInput, clearFields, setCurrentContact } from "./utils.js";
+import { formatTime, addDataToLocalStorage, checkInput, clearFields, closeEmojiModel } from "./utils.js";
+
 import { sendInitMessage } from "./chatMessages.js";
 const addUserBtn = document.querySelector(".fa-plus-square");
 const contactsContainer = document.querySelector(".messages");
@@ -75,10 +76,14 @@ const addContactToArr = () => {
 };
 
 addUserBtn.addEventListener("click", () => {
+  closeEmojiModel();
   addContactToArr();
   sendInitMessage();
 });
 
+export function getFirstContactAdded() {
+  return [...document.querySelectorAll(".messages .message")];
+}
 export function displayContacts(users) {
   contactsContainer.innerHTML = "";
   users.forEach((user) => {
@@ -136,9 +141,6 @@ export function setLastMessageInMessageArea() {
     const lastMessageTime = lastMessage.messageTime;
     const lastMessageTimeHour = lastMessageTime.toString().split(":")[0];
     const lastMessageTimeMin = lastMessageTime.toString().split(":")[1];
-
-    console.log(contact);
-
     contact.message = lastMessageText;
     contact.hours = lastMessageTimeHour;
     contact.min = lastMessageTimeMin;
