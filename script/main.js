@@ -1,4 +1,4 @@
-import { formatTime, addDataToLocalStorage, checkInput, clearFields, closeEmojiModel } from "./utils.js";
+import { formatTime, addDataToLocalStorage, checkInput, clearFields, closeEmojiModel, getUserImage } from "./utils.js";
 
 import { sendInitMessage } from "./chatMessages.js";
 const addUserBtn = document.querySelector(".fa-plus-square");
@@ -6,6 +6,7 @@ const contactsContainer = document.querySelector(".messages");
 const messagesArea = document.querySelector(".search-container");
 const chatArea = document.querySelector(".chat-container");
 const searchInput = document.querySelector(".search");
+const fileInput = document.querySelector("#profile-pic");
 export const localStorageitems = getDataToLocalStorage() || [];
 
 const x = window.matchMedia("(max-width: 836px)");
@@ -32,6 +33,13 @@ function openContactsChat(contacts) {
   });
 }
 
+let userImage = "";
+fileInput.addEventListener("change", () => {
+  getUserImage(fileInput.files[0]).then((data) => {
+    userImage = data;
+  });
+});
+
 function collectUserData() {
   const name = document.querySelector(".user-name").value;
   const message = document.querySelector(".user-message").value;
@@ -39,7 +47,7 @@ function collectUserData() {
   const userOb = {
     id: id,
     name: name,
-    // pic:pic,
+    pic: userImage || "../profile-pic.png",
     message: message,
     hours: formatTime().hours,
     min: formatTime().min,
@@ -92,7 +100,7 @@ export function displayContacts(users) {
     conatctDiv.setAttribute("data-id", user.id);
     conatctDiv.innerHTML = `
         <div class="profile-pic">
-          <img src="profile-pic.png" alt="" />
+          <img src=${user.pic} alt="" />
         </div>
         <div class="message-info">
           <div class="name">${user.name}</div>

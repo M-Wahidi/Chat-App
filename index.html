@@ -59,18 +59,23 @@
         <div class="add-form-container">
           <h2>ADD CONTACT</h2>
           <div class="name-div">
-            <label for="name">Name: </label>
+            <label for="name">Name</label>
             <input type="text" class="user-name" id="name" />
           </div>
 
           <div class="message-div">
-            <label class="message-label" for="message">Message:</label>
+            <label class="message-label" for="message">Message</label>
             <textarea type="textarea" class="user-message" id="message"> </textarea>
           </div>
-          <div class="profile-pic-div">
-            <label for="profile-pic">Profile Pic:</label>
-            <input type="file" id="profile-pic" />
+
+          <div class="wrapper">
+            <label for="profile-pic">Profile Picture</label>
+            <div class="file-upload">
+              <input type="file" id="profile-pic" accept="image/jpg, image/jpeg, image/png" />
+              <i class="fa fa-arrow-up"></i>
+            </div>
           </div>
+          
           <i class="fas fa-plus-square"></i>
         </div>
       </div>

@@ -1,32 +1,12 @@
-import {
-  userID,
-  sendUsersArr,
-  setLastMessageInMessageArea,
-  displayContacts,
-  localStorageitems,
-} from "./main.js";
-import {
-  formatTime,
-  addDataToLocalStorage,
-  checkInputLanguage,
-  setCurrentContact,
-  closeEmojiModel,
-} from "./utils.js";
+import { userID, sendUsersArr, setLastMessageInMessageArea, displayContacts, localStorageitems } from "./main.js";
+import { formatTime, addDataToLocalStorage, checkInputLanguage, setCurrentContact, closeEmojiModel } from "./utils.js";
 
 const chatMessages = document.querySelector(".chat-messages");
 const chatName = document.querySelector(".send-to");
 const messages = document.querySelector(".messages");
 const form = document.querySelector("form");
 const sendMessageBtn = document.querySelector(".fa-paper-plane");
-const Days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Saturday",
-  "Firday",
-];
+const Days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Firday"];
 let foundName = "";
 let currentActiveContact = "";
 
@@ -49,9 +29,7 @@ messages.addEventListener("click", async (e) => {
 
 export function getActiveContact() {
   const contacts = [...document.querySelectorAll(".message")];
-  const setActiveContact = contacts.filter(
-    (elem) => elem.dataset.id === currentActiveContact.dataset.id
-  );
+  const setActiveContact = contacts.filter((elem) => elem.dataset.id === currentActiveContact.dataset.id);
   setCurrentContact(setActiveContact[0]);
 }
 
@@ -149,9 +127,7 @@ function displayMessages() {
   dateInfoDiv.classList.add("date-info");
 
   setInterval(() => {
-    dateInfoDiv.innerHTML = `${getLiveTime().day}, ${getLiveTime().hours}:${
-      getLiveTime().min
-    }`;
+    dateInfoDiv.innerHTML = `${getLiveTime().day}, ${getLiveTime().hours}:${getLiveTime().min}`;
   }, 10);
 
   const dateDiv = document.createElement("div");
@@ -182,9 +158,7 @@ async function displayCurrentMessages() {
   chatName.textContent = defaultContact.name;
   contact[0].classList.add("active-contact");
   const currentContactId = userID(contact[0]).dataset.id;
-  foundName = await sendUsersArr().find(
-    (user) => user.id === Number(currentContactId)
-  );
+  foundName = await sendUsersArr().find((user) => user.id === Number(currentContactId));
   displayMessages();
 }
 
