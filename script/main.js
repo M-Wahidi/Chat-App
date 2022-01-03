@@ -1,4 +1,12 @@
-import { formatTime, addDataToLocalStorage, checkInput, clearFields, closeEmojiModel, getUserImage } from "./utils.js";
+import {
+  formatTime,
+  addDataToLocalStorage,
+  checkInput,
+  clearFields,
+  closeEmojiModel,
+  getUserImage,
+  clearUploadClass,
+} from "./utils.js";
 
 import { sendInitMessage } from "./chatMessages.js";
 const addUserBtn = document.querySelector(".fa-plus-square");
@@ -69,6 +77,8 @@ function collectUserData() {
     },
   };
   document.querySelector(".create-user-model").classList.toggle("open-model");
+  clearUploadClass();
+
   return userOb;
 }
 
@@ -105,7 +115,9 @@ export function displayContacts(users) {
         <div class="message-info">
           <div class="name">${user.name}</div>
           <div class="message-data"><span>${
-            user.message.length > 20 ? user.message.slice(0, 20) + "..." : user.message
+            user.message.length > 20
+              ? user.message.slice(0, 20) + "..."
+              : user.message
           }<span></div>
         </div>
         <div class="time">${user.hours}:<span>${user.min}</span></div>
@@ -143,8 +155,10 @@ searchInput.addEventListener("input", () => {
 
 export function setLastMessageInMessageArea() {
   localStorageitems.map((contact) => {
-    const messagesLength = contact.messages.sendTo[0].message.messageData.length;
-    const lastMessage = contact.messages.sendTo[0].message.messageData[messagesLength - 1];
+    const messagesLength =
+      contact.messages.sendTo[0].message.messageData.length;
+    const lastMessage =
+      contact.messages.sendTo[0].message.messageData[messagesLength - 1];
     const lastMessageText = lastMessage.messageText;
     const lastMessageTime = lastMessage.messageTime;
     const lastMessageTimeHour = lastMessageTime.toString().split(":")[0];

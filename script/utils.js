@@ -5,13 +5,18 @@ const chatArea = document.querySelector(".chat-container");
 const messagesArea = document.querySelector(".search-container");
 const backBtn = document.querySelector(".fa-arrow-left");
 const emojiBtn = document.querySelector(".fa-laugh");
-const fileInput = document.querySelector("#profile-pic");
 
 export function formatTime() {
   let date = new Date();
   let timeDay = date.getHours() >= 12 ? " PM" : " AM";
-  let hours = date.getHours() === 0 ? 12 : date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
-  let min = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  let hours =
+    date.getHours() === 0
+      ? 12
+      : date.getHours() > 12
+      ? date.getHours() - 12
+      : date.getHours();
+  let min =
+    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
   return {
     hours: hours,
     min: min + timeDay,
@@ -39,6 +44,7 @@ export function setCurrentContact(contact) {
 
 //  close create contact model
 closeModelBtn.addEventListener("click", () => {
+  clearUploadClass();
   clearFields();
   createUserModel.classList.remove("open-model");
 });
@@ -85,16 +91,19 @@ export function closeEmojiModel() {
 }
 
 export async function getUserImage(file) {
+  const fileInputDiv = document.querySelector(".file-upload");
   let image = await new Promise((reslove) => {
     let fileReader = new FileReader();
     fileReader.addEventListener("load", () => {
       reslove(fileReader.result);
+      fileInputDiv.classList.add("uplaodCompleted");
     });
     fileReader.readAsDataURL(file);
   });
   return image;
 }
 
-// let t = getUserImage(fileInput.files[0]).then((data) => {
-//   return data;
-// });
+export function clearUploadClass() {
+  document.querySelector("#profile-pic").value = "";
+  document.querySelector(".file-upload").classList.remove("uplaodCompleted");
+}
