@@ -13,8 +13,9 @@ const addUserBtn = document.querySelector(".fa-plus-square");
 const contactsContainer = document.querySelector(".messages");
 const messagesArea = document.querySelector(".search-container");
 const chatArea = document.querySelector(".chat-container");
-const searchInput = document.querySelector(".search");
+export const searchInput = document.querySelector(".search");
 const fileInput = document.querySelector("#profile-pic");
+const test = document.querySelector(".fa-paperclip");
 export const localStorageitems = getDataToLocalStorage() || [];
 
 const x = window.matchMedia("(max-width: 836px)");
@@ -43,9 +44,13 @@ function openContactsChat(contacts) {
 
 let userImage = "";
 fileInput.addEventListener("change", () => {
-  getUserImage(fileInput.files[0]).then((data) => {
-    userImage = data;
-  });
+  getUserImage(fileInput.files[0])
+    .then((data) => {
+      userImage = data;
+    })
+    .catch((err) => {
+      console.log(err + " something happend");
+    });
 });
 
 function collectUserData() {
@@ -55,7 +60,7 @@ function collectUserData() {
   const userOb = {
     id: id,
     name: name,
-    pic: userImage || "../profile-pic.png",
+    pic: userImage,
     message: message,
     hours: formatTime().hours,
     min: formatTime().min,
@@ -69,6 +74,7 @@ function collectUserData() {
               {
                 messageTime: `${formatTime().hours}:${formatTime().min}`,
                 messageText: message,
+                sortByDate: new Date().toLocaleString(),
               },
             ],
           },
@@ -78,7 +84,7 @@ function collectUserData() {
   };
   document.querySelector(".create-user-model").classList.toggle("open-model");
   clearUploadClass();
-
+  userImage = "";
   return userOb;
 }
 
@@ -110,14 +116,12 @@ export function displayContacts(users) {
     conatctDiv.setAttribute("data-id", user.id);
     conatctDiv.innerHTML = `
         <div class="profile-pic">
-          <img src=${user.pic} alt="" />
+          <img src=${user.pic || "../profile-pic.png"} alt="" />
         </div>
         <div class="message-info">
           <div class="name">${user.name}</div>
           <div class="message-data"><span>${
-            user.message.length > 20
-              ? user.message.slice(0, 20) + "..."
-              : user.message
+            user.message.length > 20 ? user.message.slice(0, 15) + "..." : user.message
           }<span></div>
         </div>
         <div class="time">${user.hours}:<span>${user.min}</span></div>
@@ -155,10 +159,8 @@ searchInput.addEventListener("input", () => {
 
 export function setLastMessageInMessageArea() {
   localStorageitems.map((contact) => {
-    const messagesLength =
-      contact.messages.sendTo[0].message.messageData.length;
-    const lastMessage =
-      contact.messages.sendTo[0].message.messageData[messagesLength - 1];
+    const messagesLength = contact.messages.sendTo[0].message.messageData.length;
+    const lastMessage = contact.messages.sendTo[0].message.messageData[messagesLength - 1];
     const lastMessageText = lastMessage.messageText;
     const lastMessageTime = lastMessage.messageTime;
     const lastMessageTimeHour = lastMessageTime.toString().split(":")[0];
@@ -168,6 +170,25 @@ export function setLastMessageInMessageArea() {
     contact.min = lastMessageTimeMin;
   });
   addDataToLocalStorage(localStorageitems);
+}
+
+export function sortContact() {
+  const sortContact = localStorageitems.sort((a, b) => {
+    if (
+      a.messages.sendTo[0].message.messageData[a.messages.sendTo[0].message.messageData.length - 1].sortByDate >
+      b.messages.sendTo[0].message.messageData[b.messages.sendTo[0].message.messageData.length - 1].sortByDate
+    ) {
+      return -1;
+    }
+    if (
+      a.messages.sendTo[0].message.messageData[a.messages.sendTo[0].message.messageData.length - 1].sortByDate <
+      b.messages.sendTo[0].message.messageData[b.messages.sendTo[0].message.messageData.length - 1].sortByDate
+    ) {
+      return 1;
+    }
+    return 0;
+  });
+  addDataToLocalStorage(sortContact);
 }
 
 setLastMessageInMessageArea();

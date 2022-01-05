@@ -5,21 +5,23 @@ const chatArea = document.querySelector(".chat-container");
 const messagesArea = document.querySelector(".search-container");
 const backBtn = document.querySelector(".fa-arrow-left");
 const emojiBtn = document.querySelector(".fa-laugh");
+const addedName = document.querySelector(".user-name");
+const addedMessage = document.querySelector(".user-message");
+const searchInput = document.querySelector(".search");
 
 export function formatTime() {
   let date = new Date();
+  // let fullDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
   let timeDay = date.getHours() >= 12 ? " PM" : " AM";
-  let hours =
-    date.getHours() === 0
-      ? 12
-      : date.getHours() > 12
-      ? date.getHours() - 12
-      : date.getHours();
-  let min =
-    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  let hours = date.getHours() === 0 ? 12 : date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+  let min = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  // let sec = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
+
   return {
+    // fullDate: fullDate,
     hours: hours,
     min: min + timeDay,
+    // sec: sec,
   };
 }
 
@@ -62,11 +64,22 @@ backBtn.addEventListener("click", () => {
 
 export function checkInputLanguage(elem) {
   const arabic = /[\u0600-\u06FF\u0750-\u077F]/;
-  const value = document.querySelector(".sendMessage");
-  if (arabic.test(value.value)) {
-    value.classList.add("arabic");
+  const sendMessageValue = document.querySelector(".sendMessage");
+  if (
+    arabic.test(sendMessageValue.value) ||
+    arabic.test(searchInput.value) ||
+    arabic.test(addedName.value) ||
+    arabic.test(addedMessage.value)
+  ) {
+    sendMessageValue.classList.add("arabic");
+    searchInput.classList.add("arabic");
+    addedName.classList.add("arabic");
+    addedMessage.classList.add("arabic");
   } else {
-    value.classList.remove("arabic");
+    sendMessageValue.classList.remove("arabic");
+    searchInput.classList.remove("arabic");
+    addedName.classList.remove("arabic");
+    addedMessage.classList.remove("arabic");
   }
   elem.forEach((msg) => {
     if (arabic.test(msg.textContent)) {
@@ -80,7 +93,9 @@ emojiBtn.addEventListener("click", () => {
 });
 
 document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("emoji-model")) return;
   if (e.target.closest(".emoji-model")) {
+    console.log(e.target);
     const form = document.querySelector("form");
     form.sendMessage.value += e.target.textContent;
   }
@@ -104,6 +119,19 @@ export async function getUserImage(file) {
 }
 
 export function clearUploadClass() {
-  document.querySelector("#profile-pic").value = "";
+  const inputFile = document.querySelector(".file-upload input");
+  inputFile.value = "";
+
   document.querySelector(".file-upload").classList.remove("uplaodCompleted");
 }
+addedName.addEventListener("input", () => {
+  checkInputLanguage([addedName]);
+});
+
+addedMessage.addEventListener("input", () => {
+  checkInputLanguage([addedMessage]);
+});
+
+searchInput.addEventListener("input", () => {
+  checkInputLanguage([searchInput]);
+});
