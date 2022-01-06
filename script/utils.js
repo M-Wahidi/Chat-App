@@ -18,9 +18,8 @@ emojiBtn.addEventListener("click", () => {
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("emoji-model")) return;
   if (e.target.closest(".emoji-model")) {
-    console.log(e.target);
     const form = document.querySelector("form");
-    form.sendMessage.value += e.target.textContent;
+    form.sendMessage.value += e.target.textContent;F
   }
 });
 
