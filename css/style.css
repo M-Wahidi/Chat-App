@@ -519,8 +519,7 @@ input[type="file"] {
   width: auto;
   background-color: whitesmoke;
   position: absolute;
-  right: 50%;
-  transform: translateX(50%);
+  right: 5%;
   bottom: 4.2rem;
   display: none;
   padding: 0 0.5rem;
