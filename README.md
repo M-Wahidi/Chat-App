@@ -20,7 +20,7 @@ Front-End Chat App that show you the functionality of sender and receiver.
 ## Pictures
 
 # Desktop - Large
-
+![Large](https://github.com/M-Wahidi/Chat-App/blob/master/app_images/desktop_large.png)
 # Desktop - Medium
 
 # Tablet / Mobile
