@@ -137,7 +137,7 @@ export function displayContacts(users) {
     conatctDiv.setAttribute("data-id", user.id);
     conatctDiv.innerHTML = `
         <div class="profile-pic">
-          <img src=${user.pic || "/ProfilePicture.png"} alt="" />
+          <img src=${user.pic || "/app_images/ProfilePicture.png"} alt="" />
         </div>
         <div class="message-info">
           <div class="name">${user.name}</div>
