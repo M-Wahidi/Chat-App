@@ -8,6 +8,51 @@ const emojiBtn = document.querySelector(".fa-laugh");
 const addedName = document.querySelector(".user-name");
 const addedMessage = document.querySelector(".user-message");
 const searchInput = document.querySelector(".search");
+export const userStatus = document.querySelector(".contact-status span");
+
+// Event Handler
+emojiBtn.addEventListener("click", () => {
+  document.querySelector(".emoji-model").classList.toggle("open");
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("emoji-model")) return;
+  if (e.target.closest(".emoji-model")) {
+    console.log(e.target);
+    const form = document.querySelector("form");
+    form.sendMessage.value += e.target.textContent;
+  }
+});
+
+//  close create contact model
+closeModelBtn.addEventListener("click", () => {
+  clearUploadClass();
+  clearFields();
+  createUserModel.classList.remove("open-model");
+});
+
+// open create contact model
+openContactModel.addEventListener("click", () => {
+  createUserModel.classList.add("open-model");
+});
+
+backBtn.addEventListener("click", () => {
+  chatArea.classList.remove("open-chat-area");
+  messagesArea.classList.remove("close-search-container");
+  closeEmojiModel();
+});
+
+addedName.addEventListener("input", () => {
+  checkInputLanguage([addedName]);
+});
+
+addedMessage.addEventListener("input", () => {
+  checkInputLanguage([addedMessage]);
+});
+
+searchInput.addEventListener("input", () => {
+  checkInputLanguage([searchInput]);
+});
 
 export function formatTime() {
   let date = new Date();
@@ -44,24 +89,6 @@ export function setCurrentContact(contact) {
   contact.classList.add("active-contact");
 }
 
-//  close create contact model
-closeModelBtn.addEventListener("click", () => {
-  clearUploadClass();
-  clearFields();
-  createUserModel.classList.remove("open-model");
-});
-
-// open create contact model
-openContactModel.addEventListener("click", () => {
-  createUserModel.classList.add("open-model");
-});
-
-backBtn.addEventListener("click", () => {
-  chatArea.classList.remove("open-chat-area");
-  messagesArea.classList.remove("close-search-container");
-  closeEmojiModel();
-});
-
 export function checkInputLanguage(elem) {
   const arabic = /[\u0600-\u06FF\u0750-\u077F]/;
   const sendMessageValue = document.querySelector(".sendMessage");
@@ -88,19 +115,6 @@ export function checkInputLanguage(elem) {
   });
 }
 
-emojiBtn.addEventListener("click", () => {
-  document.querySelector(".emoji-model").classList.toggle("open");
-});
-
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("emoji-model")) return;
-  if (e.target.closest(".emoji-model")) {
-    console.log(e.target);
-    const form = document.querySelector("form");
-    form.sendMessage.value += e.target.textContent;
-  }
-});
-
 export function closeEmojiModel() {
   document.querySelector(".emoji-model").classList.remove("open");
 }
@@ -124,14 +138,14 @@ export function clearUploadClass() {
 
   document.querySelector(".file-upload").classList.remove("uplaodCompleted");
 }
-addedName.addEventListener("input", () => {
-  checkInputLanguage([addedName]);
-});
 
-addedMessage.addEventListener("input", () => {
-  checkInputLanguage([addedMessage]);
-});
-
-searchInput.addEventListener("input", () => {
-  checkInputLanguage([searchInput]);
-});
+export function checkUserTypingStatus(input) {
+  const wave = document.querySelector(".wave");
+  if (input.length > 0) {
+    userStatus.textContent = `[User] is Typing`;
+    wave.style.display = "flex";
+  } else {
+    userStatus.textContent = "Online";
+    wave.style.display = "none";
+  }
+}

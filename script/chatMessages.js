@@ -6,7 +6,14 @@ import {
   localStorageitems,
   sortContact,
 } from "./main.js";
-import { formatTime, addDataToLocalStorage, checkInputLanguage, setCurrentContact, closeEmojiModel } from "./utils.js";
+import {
+  formatTime,
+  addDataToLocalStorage,
+  checkInputLanguage,
+  setCurrentContact,
+  closeEmojiModel,
+  checkUserTypingStatus,
+} from "./utils.js";
 
 const chatMessages = document.querySelector(".chat-messages");
 const chatName = document.querySelector(".send-to");
@@ -15,8 +22,10 @@ const form = document.querySelector("form");
 const sendMessageBtn = document.querySelector(".fa-paper-plane");
 const Days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Firday"];
 let foundName = "";
+let UserMessages = "";
 let currentActiveContact = "";
 
+// Event Handler
 document.addEventListener("DOMContentLoaded", () => {
   displayCurrentMessages();
 });
@@ -24,6 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
 messages.addEventListener("click", (e) => {
   if (!e.target.closest(".message")) return;
   const contacts = document.querySelectorAll(".message");
+  form.sendMessage.value = "";
+  checkUserTypingStatus(form.sendMessage.value);
   contacts.forEach((contact) => {
     contact.classList.remove("active-contact");
   });
@@ -32,6 +43,47 @@ messages.addEventListener("click", (e) => {
   setCurrentContact(currentActiveContact);
   showContact(e);
   closeEmojiModel();
+});
+
+form.addEventListener("input", () => {
+  addMessages(foundName);
+  currentActiveContact = document.querySelector(".active-contact");
+  checkInputLanguage([form.sendMessage]);
+  getActiveContact();
+});
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  getUserInput();
+  setLastMessageInMessageArea();
+  sortContact();
+  displayContacts(localStorageitems);
+  getActiveContact();
+  checkInputLanguage([form.sendMessage]);
+});
+
+form.addEventListener("keyup", (_) => {
+  checkUserTypingStatus(form.sendMessage.value);
+});
+
+sendMessageBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  getUserInput();
+  setLastMessageInMessageArea();
+  sortContact();
+  displayContacts(localStorageitems);
+  getActiveContact();
+});
+
+document.querySelector(".fa-laugh").addEventListener("click", () => {
+  addMessages(foundName);
+  const contacts = [...document.querySelectorAll(".message")];
+  const activeContact = document.querySelector(".active-contact");
+  currentActiveContact = activeContact;
+  contacts.forEach((contact) => {
+    contact.classList.remove("active-contact");
+  });
+  setCurrentContact(activeContact);
 });
 
 export function getActiveContact() {
@@ -51,34 +103,10 @@ function showContact(e) {
     displayMessages();
   }
 }
-let UserMessages = "";
 
 function addMessages(user) {
   UserMessages = user.messages.sendTo[0].message.messageData;
 }
-form.addEventListener("input", () => {
-  addMessages(foundName);
-  currentActiveContact = document.querySelector(".active-contact");
-  checkInputLanguage([form.sendMessage]);
-  getActiveContact();
-});
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  getUserInput();
-  setLastMessageInMessageArea();
-  sortContact();
-  displayContacts(localStorageitems);
-  getActiveContact();
-});
-
-sendMessageBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  getUserInput();
-  setLastMessageInMessageArea();
-  sortContact();
-  displayContacts(localStorageitems);
-  getActiveContact();
-});
 
 function getUserInput() {
   const userInput = form.sendMessage.value;
@@ -106,17 +134,6 @@ function getUserInput() {
   form.reset();
   setTimeout(respondMessage, 2000);
 }
-
-document.querySelector(".fa-laugh").addEventListener("click", () => {
-  addMessages(foundName);
-  const contacts = [...document.querySelectorAll(".message")];
-  const activeContact = document.querySelector(".active-contact");
-  currentActiveContact = activeContact;
-  contacts.forEach((contact) => {
-    contact.classList.remove("active-contact");
-  });
-  setCurrentContact(activeContact);
-});
 
 function displayMessages() {
   const messagesArr = foundName.messages.sendTo[0].message.messageData;
@@ -155,8 +172,11 @@ function displayMessages() {
 async function displayCurrentMessages() {
   if (sendUsersArr().length === 0) {
     chatName.textContent = "";
+    document.querySelector(".contact-status span").textContent = "";
     return;
   }
+  document.querySelector(".contact-status span").textContent = "Online";
+
   const defaultContact = sendUsersArr()[0];
   const contact = [...document.querySelectorAll(".messages .message")];
   chatName.textContent = defaultContact.name;
@@ -173,10 +193,12 @@ function respondMessage() {
   chatMessages.appendChild(resp);
   scrollBottom();
 }
+
 function scrollBottom() {
   const bottom = chatMessages.scrollHeight;
   chatMessages.scrollTo({ top: bottom });
 }
+
 export function sendInitMessage() {
   chatMessages.innerHTML = "";
   chatName.textContent = sendUsersArr()[0].name;

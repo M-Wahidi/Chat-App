@@ -7,7 +7,6 @@ import {
   getUserImage,
   clearUploadClass,
 } from "./utils.js";
-
 import { sendInitMessage } from "./chatMessages.js";
 const addUserBtn = document.querySelector(".fa-plus-square");
 const contactsContainer = document.querySelector(".messages");
@@ -15,22 +14,50 @@ const messagesArea = document.querySelector(".search-container");
 const chatArea = document.querySelector(".chat-container");
 export const searchInput = document.querySelector(".search");
 const fileInput = document.querySelector("#profile-pic");
-const test = document.querySelector(".fa-paperclip");
 export const localStorageitems = getDataToLocalStorage() || [];
-
+let userImage = "";
 const x = window.matchMedia("(max-width: 836px)");
+
+// Event Handler
 document.addEventListener("keydown", (e) => {
   if (e.code === "Tab" && x.matches) {
     e.preventDefault();
   }
 });
 
+searchInput.addEventListener("input", () => {
+  const filteredName = localStorageitems.find((elem) => {
+    return elem.name.toLowerCase() === searchInput.value.toLowerCase();
+  });
+
+  if (searchInput.value.length === 0) {
+    displayContacts(localStorageitems);
+  }
+
+  const filteredArr = [];
+  filteredArr.push(filteredName);
+
+  if (filteredName == undefined) return;
+
+  if (searchInput.value.length > 0) {
+    displayContacts(filteredArr);
+  }
+});
+
+addUserBtn.addEventListener("click", () => {
+  closeEmojiModel();
+  addContactToArr();
+  sendInitMessage();
+});
+
 export function userID(contact) {
   return contact;
 }
+
 export function sendUsersArr() {
   return localStorageitems;
 }
+
 function openContactsChat(contacts) {
   contacts.forEach((contact) => {
     contact.addEventListener("click", () => {
@@ -42,7 +69,6 @@ function openContactsChat(contacts) {
   });
 }
 
-let userImage = "";
 fileInput.addEventListener("change", () => {
   getUserImage(fileInput.files[0])
     .then((data) => {
@@ -99,15 +125,10 @@ const addContactToArr = () => {
   clearFields();
 };
 
-addUserBtn.addEventListener("click", () => {
-  closeEmojiModel();
-  addContactToArr();
-  sendInitMessage();
-});
-
 export function getFirstContactAdded() {
   return [...document.querySelectorAll(".messages .message")];
 }
+
 export function displayContacts(users) {
   contactsContainer.innerHTML = "";
   users.forEach((user) => {
@@ -137,25 +158,6 @@ function getDataToLocalStorage() {
   const users = JSON.parse(localStorage.getItem("users"));
   return users;
 }
-
-searchInput.addEventListener("input", () => {
-  const filteredName = localStorageitems.find((elem) => {
-    return elem.name.toLowerCase() === searchInput.value.toLowerCase();
-  });
-
-  if (searchInput.value.length === 0) {
-    displayContacts(localStorageitems);
-  }
-
-  const filteredArr = [];
-  filteredArr.push(filteredName);
-
-  if (filteredName == undefined) return;
-
-  if (searchInput.value.length > 0) {
-    displayContacts(filteredArr);
-  }
-});
 
 export function setLastMessageInMessageArea() {
   localStorageitems.map((contact) => {

@@ -211,10 +211,61 @@ body {
   width: 100%;
   display: flex;
   align-items: center;
-  padding-left: 2rem;
+  padding: 0 2rem;
+  position: relative;
+}
+
+.chat-container header .contact-status {
+  position: absolute;
+  bottom: 5px;
+  color: var(--blue-color);
+  font-weight: bold;
+  font-size: 0.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wave {
+  position: relative;
+  text-align: center;
+  margin-left: 0.2rem;
+  display: none;
+}
+
+.wave .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #303131;
+  animation: wave 0.8s linear infinite;
+  background-color: var(--blue-color);
+  margin: 0 0.1rem;
+}
+
+.wave .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.wave .dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes wave {
+  0%,
+  60%,
+  100% {
+    transform: initial;
+  }
+
+  30% {
+    transform: translateY(-5px);
+  }
 }
 .chat-container .fa-ellipsis-h {
-  display: none;
+  font-size: 1.5rem;
+  color: var(--dark-mode-color);
+  position: absolute;
+  right: 1.5rem;
+  cursor: pointer;
 }
 .chat-container .fa-arrow-left {
   display: none;
@@ -561,9 +612,6 @@ input[type="file"] {
   .chat-container {
     flex-basis: 530px;
   }
-  .chat-container .fa-ellipsis-h {
-    display: none;
-  }
   .chat-container .fa-arrow-left .fa-arrow-left {
     display: none;
   }
@@ -574,7 +622,7 @@ input[type="file"] {
   .sender-message {
     width: 260px;
     font-size: 1rem;
-    transform: translateX(214px);
+    transform: translateX(213px);
   }
   .reciver-message {
     width: 260px;
@@ -646,11 +694,11 @@ input[type="file"] {
     transition: all 0.3s;
   }
   .chat-container header {
-    justify-content: end;
+    justify-content: center;
     margin-right: 2rem;
     position: sticky;
   }
-  .chat-container header div {
+  */ .chat-container header div {
     position: absolute;
     right: 2rem;
     padding-right: 1rem;
@@ -764,7 +812,7 @@ input[type="file"] {
   .add-form-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
     height: 100%;
@@ -773,14 +821,16 @@ input[type="file"] {
   }
   .add-form-container h2 {
     position: relative;
+    height: auto;
   }
 
   .name-div {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     flex-direction: column;
     align-items: center;
     max-width: 400px;
+    height: auto;
     font-size: 1.2rem;
   }
   .name-div input {
@@ -798,6 +848,7 @@ input[type="file"] {
     flex-direction: column;
     align-items: center;
     max-width: 400px;
+    height: auto;
     font-size: 1.2rem;
   }
   textarea {
@@ -809,13 +860,16 @@ input[type="file"] {
     max-height: auto;
     border: 1px solid rgb(214, 212, 212);
   }
+  .wrapper {
+    height: auto;
+  }
 
   .fa-plus-square {
     font-size: 2.5rem;
     cursor: pointer;
     position: absolute;
     transition: all 0.1s ease-in-out;
-    bottom: 1rem !important;
+    bottom: 2rem !important;
     color: var(--dark-mode-color);
     width: auto;
     height: auto;

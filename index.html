@@ -4,21 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <link rel="icon" type="image/x-icon" href="./favicon.png">
+    <link rel="icon" type="image/x-icon" href="./favicon.png" />
     <link rel="stylesheet" href="css/style.css" />
-
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
       integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
       crossorigin="anonymous"
     />
-
     <title>Chat App</title>
   </head>
   <body>
     <h2 class="app-name">Chat APP</h2>
-
     <div class="main">
       <!-- Search Area,Incoming Area -->
       <div class="search-container">
@@ -28,24 +25,33 @@
             <i class="fas fa-pen-square"></i>
           </div>
         </div>
-
         <!-- Chat Area  -->
         <div class="messages"></div>
       </div>
-
       <!-- Chat Area -->
-
       <div class="chat-container">
         <header>
           <i class="fas fa-arrow-left"></i>
-          <div class="chat-name"><span class="send-to"></span></div>
+            <div class="chat-name"><span class="send-to"></span></div>
+            <div class="contact-status">
+              <span>Online</span>
+              <div class="wave">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
+          
+          </div>
+          <div class="contact-picture">
+            <img src="" alt="">
+          </div>
           <i class="fas fa-ellipsis-h"></i>
         </header>
         <div class="chat-messages"></div>
         <form>
           <div class="message-input">
             <i class="fas fa-paperclip"></i>
-            <input type="text" class="sendMessage" name="sendMessage" placeholder="Hello World..."/>
+            <input type="text" class="sendMessage" name="sendMessage" placeholder="Hello World..." />
             <div class="input-iconzero">
               <i class="far fa-laugh"></i>
               <i class="fas fa-paper-plane"></i>
@@ -53,14 +59,13 @@
           </div>
         </form>
       </div>
-
       <div class="create-user-model">
         <i class="fas fa-times"></i>
         <div class="add-form-container">
           <h2>ADD CONTACT</h2>
           <div class="name-div">
             <label for="name">Name</label>
-            <input type="text" class="user-name" id="name"  />
+            <input type="text" class="user-name" id="name" />
           </div>
 
           <div class="message-div">
@@ -75,54 +80,48 @@
               <i class="fa fa-arrow-up"></i>
             </div>
           </div>
-          
+
           <i class="fas fa-plus-square"></i>
         </div>
       </div>
-      
-    <div class="emoji-model">
-      <span>&#128512</span>
-      <span>&#128513</span>
-      <span>&#128514</span>
-      <span>&#128516</span>
-      <span>&#128517</span>
-      <span>&#128518</span>
-      <span>&#128519</span>
-   
-      <span>&#128520</span>
-      <span>&#128521</span>
-      <span>&#128522</span>
-      <span>&#128523</span>
-      <span>&#128524</span>
-      <span>&#128525</span>
-      <span>&#128526</span>
-      <span>&#128527</span>
-      <span>&#128528</span>
-      <span>&#128529</span>
-
-      <span>&#128530</span>
-      <span>&#128531</span>
-      <span>&#128532</span>
-      <span>&#128533</span>
-      <span>&#128534</span>
-      <span>&#128535</span>
-      <span>&#128536</span>
-      <span>&#128537</span>
-      <span>&#128538</span>
-      <span>&#128539</span>
-
-      <span>&#128540</span>
-      <span>&#128541</span>
-      <span>&#128542</span>
-      <span>&#128543</span>
-      <span>&#128544</span>
-      <span>&#128545</span>
-      <span>&#128546</span>
-      <span>&#128547</span>
-   
+      <div class="emoji-model">
+        <span>&#128512</span>
+        <span>&#128513</span>
+        <span>&#128514</span>
+        <span>&#128516</span>
+        <span>&#128517</span>
+        <span>&#128518</span>
+        <span>&#128519</span>
+        <span>&#128520</span>
+        <span>&#128521</span>
+        <span>&#128522</span>
+        <span>&#128523</span>
+        <span>&#128524</span>
+        <span>&#128525</span>
+        <span>&#128526</span>
+        <span>&#128527</span>
+        <span>&#128528</span>
+        <span>&#128529</span>
+        <span>&#128530</span>
+        <span>&#128531</span>
+        <span>&#128532</span>
+        <span>&#128533</span>
+        <span>&#128534</span>
+        <span>&#128535</span>
+        <span>&#128536</span>
+        <span>&#128537</span>
+        <span>&#128538</span>
+        <span>&#128539</span>
+        <span>&#128540</span>
+        <span>&#128541</span>
+        <span>&#128542</span>
+        <span>&#128543</span>
+        <span>&#128544</span>
+        <span>&#128545</span>
+        <span>&#128546</span>
+        <span>&#128547</span>
+      </div>
     </div>
-    </div>
-
     <script type="module" src="./script/main.js"></script>
     <script type="module" src="./script/chatMessages.js"></script>
     <script type="module" src="./script/utils.js"></script>
