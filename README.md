@@ -24,9 +24,9 @@ Front-End Chat App that show you the functionality of sender and receiver.
 # Desktop - Medium
 ![Medium](https://github.com/M-Wahidi/Chat-App/blob/master/app_images/desktop_medium.png)
 # Tablet / Mobile
-![Small](https://github.com/M-Wahidi/Chat-App/blob/master/app_images/desktop_mobile1.png)
-![Small](https://github.com/M-Wahidi/Chat-App/blob/master/app_images/desktop_mobile2.png)
-![Small](https://github.com/M-Wahidi/Chat-App/blob/master/app_images/desktop_mobile3.png)
+![Small](https://github.com/M-Wahidi/Chat-App/blob/master/app_images/mobile_1.png)
+![Small](https://github.com/M-Wahidi/Chat-App/blob/master/app_images/mobile_2.png)
+![Small](https://github.com/M-Wahidi/Chat-App/blob/master/app_images/mobile_3.png)
 
 ## Demo
 
